@@ -13,7 +13,7 @@
 
 <h2>Installation</h2>
 <ol>
-    <li>Copy the contents of this repository into the <code>custom_components</code> folder of your Home Assistant installation.</li>
+    <li>Copy the contents of this repository into the <code>custom_components</code> folder of your Home Assistant installation and reboot.</li>
 </ol>
 
 <hr>

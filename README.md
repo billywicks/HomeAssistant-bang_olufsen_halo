@@ -33,7 +33,7 @@
     </li>
 </ol>
 
-<h3>Example: Sending a Button/Page Configuration</h3>
+<h3>Example: Button/Page Configuration</h3>
 <pre><code>{
   "configuration": {
     "version": "1.0.1",

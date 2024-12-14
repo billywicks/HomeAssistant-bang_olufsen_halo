@@ -10,6 +10,7 @@ Installation:
 Usage:
 
 1. The Integration should detect your Beoremote Halo via mDNS, if not you can add one manually through the integration.
+
 2. When configuring the Halo, you will have the option to provide a JSON configuration for the pages & buttons.
 
 Please see https://bang-olufsen.github.io/beoremote-halo/ for an example.
@@ -19,6 +20,7 @@ Events:
 The integration works via the HomeAssistant EventBus, there are two event types
 
 bang_olufsen_halo_websocket_event_in - For events reported from Beoremote Halo
+
 bang_olugsen_halo_websocket_event_out - For events reported to Beoremote Halo
 
 Sending Events to Halo:

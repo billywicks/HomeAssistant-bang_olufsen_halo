@@ -1,7 +1,7 @@
 {
     "domain": "bang_olufsen_halo",
     "name": "Bang & Olufsen BeoRemote Halo",
-    "documentation": "https://www.example.com/my_device_integration_docs",
+    "documentation": "https://github.com/billywicks/HomeAssistant-bang_olufsen_halo/",
     "requirements": [],
     "codeowners": ["@billywicks"],
     "iot_class": "local_push",

@@ -29,12 +29,12 @@ The events sent to Beoremote Halo are sent in YAML format via the bang_olufsen_h
 
 Example: Sending a Notification
 
-update:
-  type: notification
-  id: 497f6eca-6276-4993-bfeb-53cbbbba6f69
-  title: Testing
-  subtitle: This is a test notification
-serial: "1234567"
+update:<br>
+  type: notification</ br>
+  id: 497f6eca-6276-4993-bfeb-53cbbbba6f69</ br>
+  title: Testing</ br>
+  subtitle: This is a test notification</ br>
+serial: "1234567"</ br>
 
 Example: Updating a state and subtitle on a button
 

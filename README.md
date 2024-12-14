@@ -32,6 +32,35 @@
         </ul>
     </li>
 </ol>
+
+<h3>Example: Sending a Button/Page Configuration</h3>
+<pre><code>{
+  "configuration": {
+    "version": "1.0.1",
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "pages": [
+      {
+        "title": "Page Title",
+        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+        "buttons": [
+          {
+            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+            "title": "Button Title",
+            "subtitle": "Subtitle",
+            "value": 100,
+            "state": "active",
+            "content": {
+              "text": "string"
+            },
+            "default": true
+          }
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+
 <p>👉 Refer to the <a href="https://bang-olufsen.github.io/beoremote-halo/">Beoremote Halo Configuration Guide</a> for examples and usage details.</p>
 
 <hr>

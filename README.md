@@ -1,41 +1,40 @@
-HomeAssistant Bang & Olufsen Beoremote Halo Integration
+rewrite this: 
 
-This is a Home Assistant custom integration for the Bang & Olufsen Beoremote Halo, enabling seamless interaction through Home Assistant’s event system.
+# HomeAssistant-bang_olufsen_halo
+This is a HomeAssistant Integration for the Bang & Olufsen Beoremote Halo.
 
-Installation
-	1.	Copy the contents of this repository into the custom_components folder of your Home Assistant installation.
+Installation:
 
-Usage
-	1.	Automatic Device Discovery:
-	The integration automatically detects your Beoremote Halo using mDNS.
-	If detection fails, you can manually add the device through the Home Assistant Integrations menu.
-	2.	Configuration:
-	During setup, you have the option to provide a custom JSON configuration for pages and buttons on the Beoremote Halo.
-	Refer to the official documentation for configuration examples:
-  [Bang & Olufsen Beoremote Halo Configuration Guide](https://bang-olufsen.github.io/beoremote-halo/)
+1. Copy the Contents to your Home Assistant custom_components folder.
 
-Events
+Usage:
 
-The integration works through the Home Assistant Event Bus using two event types:
-	1.	bang_olufsen_halo_websocket_event_in - Events reported from the Beoremote Halo.
-	2.	bang_olufsen_halo_websocket_event_out - Events sent to the Beoremote Halo.
+1. The Integration should detect your Beoremote Halo via mDNS, if not you can add one manually through the integration.
+2. When configuring the Halo, you will have the option to provide a JSON configuration for the pages & buttons.
 
-Sending Events to the Beoremote Halo
+Please see https://bang-olufsen.github.io/beoremote-halo/ for an example.
 
-To send events to the Beoremote Halo, use the bang_olufsen_halo_websocket_event_out event type.
-Events must be formatted in YAML and are automatically serialized to JSON.
-Include the serial number of your device in the payload.
+Events:
 
-Example 1: Sending a Notification
+The integration works via the HomeAssistant EventBus, there are two event types
+
+bang_olufsen_halo_websocket_event_in - For events reported from Beoremote Halo
+bang_olugsen_halo_websocket_event_out - For events reported to Beoremote Halo
+
+Sending Events to Halo:
+
+The events sent to Beoremote Halo are sent in YAML format via the bang_olufsen_halo_websocket_event_out Event Type and are serialised in JSON, the serial number of the halo must also be provided.
+
+Example: Sending a Notification
 
 update:
   type: notification
   id: 497f6eca-6276-4993-bfeb-53cbbbba6f69
-  title: "Testing"
-  subtitle: "This is a test notification"
+  title: Testing
+  subtitle: This is a test notification
 serial: "1234567"
 
-Example 2: Updating Button State and Subtitle
+Example: Updating a state and subtitle on a button
 
 update:
   type: button
@@ -44,13 +43,11 @@ update:
   subtitle: "On"
 serial: "1234567"
 
-For additional examples, refer to the Beoremote Halo Documentation.
+Please see https://bang-olufsen.github.io/beoremote-halo/ for more examples
 
-Receiving Events from the Beoremote Halo
+Receiving Events from Halo:
 
-Events from the Beoremote Halo are received through the bang_olufsen_halo_websocket_event_in event type. Each event contains the serial number of the reporting device.
-
-Example: Received Event Data
+The events received from Beoremote Halo are received in YAML format via the bang_olufsen_halo_websocket_event_in Event Type, the Serial Number of the halo is provided.
 
 event_type: bang_olufsen_halo_websocket_event_in
 data:
@@ -66,4 +63,6 @@ context:
   parent_id: null
   user_id: null
 
-You now have the tools at your fingertips—let your creativity run wild! 😊
+I have given you the tool, the only limit now is your imagination :)
+
+

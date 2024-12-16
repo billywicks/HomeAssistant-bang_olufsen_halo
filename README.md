@@ -29,6 +29,7 @@
     <li><b>Device Configuration:</b>
         <ul>
             <li>During setup, you will have the option to provide a custom <b>JSON configuration</b> for pages and buttons.</li>
+            <li>You can generate a custom <b>JSON configuration file</b> using the <a href="https://billywicks.github.io/HomeAssistant-bang_olufsen_halo_config_generator/" target="_blank">Home Assistant Bang & Olufsen Halo Config Generator</a>.</li>
         </ul>
     </li>
 </ol>

@@ -250,14 +250,15 @@
         const contentTypeSelect = bDiv.querySelector('.contentTypeSelect');
         const contentType = contentTypeSelect.value;
         
-        let contentText = "";
+        let contentObj = {};
+
         if (contentType === "string") {
           const contentInput = bDiv.querySelector('input[name="button_content_text"]');
           if (!contentInput || !contentInput.value.trim()) {
             showError("Button content text is required.");
             return;
           }
-          contentText = contentInput.value.trim();
+          contentObj.text = contentInput.value.trim();
         } else {
           // icons
           const iconSelect = bDiv.querySelector('select[name="button_content_icon"]');
@@ -265,7 +266,8 @@
             showError("An icon must be selected.");
             return;
           }
-          contentText = iconSelect.value;
+          // Use the 'icons' key instead of 'text'
+          contentObj.icons = iconSelect.value;
         }
 
         if (!title) {
@@ -283,9 +285,7 @@
           subtitle: subtitle,
           value: parseInt(value, 10),
           state: state,
-          content: {
-            text: contentText
-          }
+          content: contentObj
         };
 
         if (defaultChecked) {

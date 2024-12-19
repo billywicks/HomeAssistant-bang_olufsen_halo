@@ -3,110 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeAssistant-bang_olufsen_halo</title>
 </head>
 <body>
+    <h1>HomeAssistant-bang_olufsen_halo</h1>
 
-<h1>HomeAssistant Bang & Olufsen Beoremote Halo Integration</h1>
-<p>This is a custom Home Assistant integration for the <b>Bang & Olufsen Beoremote Halo</b>, enabling full interaction through Home Assistant’s Event Bus.</p>
+    <p>This is a Home Assistant Integration for the Bang & Olufsen Beoremote Halo.</p>
 
-<hr>
+    <hr>
 
-<h2>Installation</h2>
-<ol>
-    <li>Copy the contents of this repository into the <code>custom_components</code> folder of your Home Assistant installation and reboot.</li>
-</ol>
+    <h2>Installation:</h2>
+    <ol>
+        <li>Copy the contents to your Home Assistant <code>custom_components</code> folder.</li>
+    </ol>
 
-<hr>
+    <hr>
 
-<h2>Usage</h2>
-<ol>
-    <li><b>Automatic Device Discovery:</b>
-        <ul>
-            <li>The integration should detect your Beoremote Halo using <b>mDNS</b>.</li>
-            <li>If the device is not detected automatically, you can manually add it through the Home Assistant Integrations menu.</li>
-        </ul>
-    </li>
-    <li><b>Device Configuration:</b>
-        <ul>
-            <li>During setup, you will have the option to provide a custom <b>JSON configuration</b> for pages and buttons.</li>
-            <li>You can generate a custom <b>JSON configuration file</b> using the <a href="https://billywicks.github.io/HomeAssistant-bang_olufsen_halo_config_generator/" target="_blank">Beoremote Halo Configuration JSON Generator</a>.</li>
-        </ul>
-    </li>
-</ol>
+    <h2>Usage:</h2>
+    <ol>
+        <li>The integration should detect your Beoremote Halo via mDNS. If not, you can add one manually through the integration setup.</li>
+        <li>When configuring the Halo, you will have the option to provide a JSON configuration for pages and buttons.</li>
+    </ol>
 
-<h3>Example: Button/Page Configuration</h3>
-<pre><code>{
-  "configuration": {
-    "version": "1.0.1",
-    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-    "pages": [
-      {
-        "title": "Page Title",
-        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-        "buttons": [
-          {
-            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-            "title": "Button Title",
-            "subtitle": "Subtitle",
-            "value": 100,
-            "state": "active",
-            "content": {
-              "text": "string"
-            },
-            "default": true
-          }
-        ]
-      }
-    ]
-  }
-}
-</code></pre>
+    <p>For more examples and configuration details, please visit:  
+        <a href="https://bang-olufsen.github.io/beoremote-halo/">Bang & Olufsen Beoremote Halo Documentation</a>
+    </p>
 
-<p>👉 Refer to the <a href="https://bang-olufsen.github.io/beoremote-halo/">Beoremote Halo Configuration Guide</a> for examples and usage details.</p>
+    <hr>
 
-<hr>
+    <h2>Events:</h2>
+    <p>The integration works via the Home Assistant EventBus, supporting two event types:</p>
+    <ul>
+        <li><code>bang_olufsen_halo_websocket_event_in</code> – Events received from Beoremote Halo</li>
+        <li><code>bang_olufsen_halo_websocket_event_out</code> – Events sent to Beoremote Halo</li>
+    </ul>
 
-<h2>Events</h2>
-<p>The integration works through the Home Assistant <b>Event Bus</b> using two event types:</p>
-<ul>
-    <li><b><code>bang_olufsen_halo_websocket_event_in</code></b> - Events reported <b>from</b> the Beoremote Halo.</li>
-    <li><b><code>bang_olufsen_halo_websocket_event_out</code></b> - Events sent <b>to</b> the Beoremote Halo.</li>
-</ul>
+    <hr>
 
-<hr>
+    <h2>Sending Events to Halo:</h2>
+    <p>Send events using YAML format via <code>bang_olufsen_halo_websocket_event_out</code>. The serial number of the Halo must be provided.</p>
 
-<h2>Sending Events to the Beoremote Halo</h2>
-<p>Events sent <b>to</b> the Beoremote Halo are serialized into <b>JSON</b> and must be sent as <b>YAML</b> using the <code>bang_olufsen_halo_websocket_event_out</code> event type.  
-The <b>serial number</b> of the device <b>must</b> be included in the payload.</p>
-
-<h3>Example 1: Sending a Notification</h3>
-<pre><code>update:
+    <h3>Example: Sending a Notification</h3>
+    <pre>
+<code>
+update:
   type: notification
   id: 497f6eca-6276-4993-bfeb-53cbbbba6f69
-  title: "Testing"
-  subtitle: "This is a test notification"
+  title: Testing
+  subtitle: This is a test notification
 serial: "1234567"
-</code></pre>
+</code>
+    </pre>
 
-<h3>Example 2: Updating a Button's State and Subtitle</h3>
-<pre><code>update:
+    <h3>Example: Updating a Button State</h3>
+    <pre>
+<code>
+update:
   type: button
   id: 497f6eca-6276-4993-bfeb-53cbbbba6f03
   state: active
   subtitle: "On"
 serial: "1234567"
-</code></pre>
+</code>
+    </pre>
 
-<p>👉 For more examples, see the <a href="https://bang-olufsen.github.io/beoremote-halo/">Beoremote Halo Documentation</a>.</p>
+    <hr>
 
-<hr>
+    <h2>Receiving Events from Halo:</h2>
+    <p>Events received from Beoremote Halo are in YAML format using the <code>bang_olufsen_halo_websocket_event_in</code> event type, including the Halo's serial number.</p>
 
-<h2>Receiving Events from the Beoremote Halo</h2>
-<p>Events received <b>from</b> the Beoremote Halo are sent through the <code>bang_olufsen_halo_websocket_event_in</code> event type.  
-Each event includes the <b>serial number</b> of the reporting device.</p>
-
-<h3>Example: Received Event Data</h3>
-<pre><code>event_type: bang_olufsen_halo_websocket_event_in
+    <pre>
+<code>
+event_type: bang_olufsen_halo_websocket_event_in
 data:
   event:
     type: power
@@ -119,12 +87,21 @@ context:
   id: 01JF3K4HSRX7MQP1XRP08CZQ87
   parent_id: null
   user_id: null
-</code></pre>
+</code>
+    </pre>
 
-<hr>
+    <hr>
 
-<h2>Unleash Your Creativity!</h2>
-<p>With this integration, the only limit is your imagination. 🚀 Create custom automations, notifications, and controls that connect seamlessly with your Beoremote Halo!</p>
+    <h2>Support & Donations 💖</h2>
+    <p>If you enjoy using this integration and would like to support its development, consider making a donation. Every contribution helps keep the project going!</p>
 
+    <p><a href="https://paypal.me/BillyMartinWicks" target="_blank"><strong>Donate via PayPal</strong></a></p>
+
+    <p>Thank you for your support! 😊</p>
+
+    <hr>
+
+    <p>Happy Automating! 🚀</p>
+    <p><em>I have given you the tool; the only limit now is your imagination!</em></p>
 </body>
 </html>

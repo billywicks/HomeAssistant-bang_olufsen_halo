@@ -123,6 +123,14 @@ context:
 
 <hr>
 
+<h2>Support the Project 💖</h2>
+<p>If you enjoy this project and would like to support its development, consider making a donation. Your support is greatly appreciated!</p>
+<a href="https://paypal.me/BillyMartinWicks" target="_blank">
+    <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="Donate via PayPal">
+</a>
+
+<hr>
+
 <h2>Unleash Your Creativity!</h2>
 <p>With this integration, the only limit is your imagination. 🚀 Create custom automations, notifications, and controls that connect seamlessly with your Beoremote Halo!</p>
 

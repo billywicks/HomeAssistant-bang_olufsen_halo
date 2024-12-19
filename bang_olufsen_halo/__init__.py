@@ -18,29 +18,25 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     serial = entry.data.get("serial")
     json_str = entry.data.get(CONF_JSON_DATA)
 
-    # Create a websocket client instance with serial
-    ws_client = MyDeviceWebSocketClient(hass, host, port, serial)
+    try:
+        json_data = json.loads(json_str) if json_str else {}
+    except json.JSONDecodeError as e:
+        _LOGGER.error("Invalid JSON provided in config: %s", e)
+        return False
+
+    ws_client = MyDeviceWebSocketClient(hass, host, port, serial, json_data=json_data)
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN][entry.entry_id] = ws_client
 
-    # Connect to the device WebSocket
     await ws_client.connect()
     ws_client.start_listening()
 
-    # If user provided JSON, parse and send it to the device
-    if json_str:
-        try:
-            json_data = json.loads(json_str)
-            await ws_client.send_message(json_data)
-            _LOGGER.debug("Sent JSON data to device: %s", json_data)
-        except json.JSONDecodeError:
-            _LOGGER.error("Invalid JSON provided in config, could not send")
+    if json_data:
+        await ws_client.send_message(json_data)
+        _LOGGER.debug("Sent JSON data to device: %s", json_data)
 
-    # Setup entity platforms if needed
     for platform in PLATFORMS:
-        hass.async_add_job(
-            hass.config_entries.async_forward_entry_setup(entry, platform)
-        )
+        hass.async_add_job(hass.config_entries.async_forward_entry_setup(entry, platform))
 
     # Register the event listener only once for this domain
     if "event_registered" not in hass.data[DOMAIN]:
@@ -50,11 +46,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 _LOGGER.warning("Event missing 'serial'; cannot route message.")
                 return
 
-            ws_client_target = None
-            for obj in hass.data[DOMAIN].values():
-                if isinstance(obj, MyDeviceWebSocketClient) and obj.serial == event_serial:
-                    ws_client_target = obj
-                    break
+            ws_client_target = next(
+                (obj for obj in hass.data[DOMAIN].values() 
+                 if isinstance(obj, MyDeviceWebSocketClient) and obj.serial == event_serial), 
+                None
+            )
 
             if not ws_client_target:
                 _LOGGER.warning("No WebSocket client found for serial %s", event_serial)

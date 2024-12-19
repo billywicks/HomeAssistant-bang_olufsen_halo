@@ -1,11 +1,16 @@
 import json
 import voluptuous as vol
+import logging  # Ensure logging is imported
 from homeassistant import config_entries
 from homeassistant.const import CONF_HOST, CONF_PORT
 from homeassistant.components.zeroconf import ZeroconfServiceInfo
 from .const import DOMAIN
+from .websocket_client import MyDeviceWebSocketClient
 
 CONF_JSON_DATA = "json_data"
+
+# Set up logging
+_LOGGER = logging.getLogger(__name__)
 
 class MyDeviceConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
@@ -20,7 +25,7 @@ class MyDeviceConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         schema = vol.Schema({
             vol.Required(CONF_HOST): str,
             vol.Required(CONF_PORT, default=8080): int,
-            vol.Required(CONF_JSON_DATA): str
+            vol.Required(CONF_JSON_DATA): str  # We will now collect JSON data here
         })
         return self.async_show_form(step_id="user", data_schema=schema)
 
@@ -51,12 +56,41 @@ class MyDeviceConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             # Combine previously collected data with the JSON data
             data = dict(self.context["user_data"])
             data[CONF_JSON_DATA] = user_input[CONF_JSON_DATA]
+
+            # Log the data to check what's being passed
+            _LOGGER.debug("User Input (JSON Data): %s", user_input[CONF_JSON_DATA])  # Log just the JSON data
+            _LOGGER.debug("Collected Data (User + JSON): %s", data)  # Log the combined data
+
+            try:
+                # Now initialize the WebSocket client
+                ws_client = MyDeviceWebSocketClient(
+                    self.hass,
+                    data[CONF_HOST],
+                    data[CONF_PORT],
+                    data["serial"]
+                )
+
+                # Log the WebSocket client initialization
+                _LOGGER.debug("WebSocket Client Initialized: %s", ws_client)
+
+                # You can call connect here or leave it for later based on your needs
+                await ws_client.connect()
+
+                # Log successful WebSocket connection
+                _LOGGER.info("WebSocket Connection Successful.")
+
+            except Exception as e:
+                _LOGGER.error("Error during WebSocket Client Initialization: %s", e)
+                return self.async_abort(reason="websocket_error")
+
+            # Create the entry for Home Assistant
             return self.async_create_entry(
                 title=data.get("serial") or data[CONF_HOST],
                 data=data
             )
 
+        # Ask the user for JSON configuration
         schema = vol.Schema({
-            vol.Required(CONF_JSON_DATA): str
+            vol.Required(CONF_JSON_DATA): str  # Collect json_data from the user
         })
         return self.async_show_form(step_id="configure_json", data_schema=schema)

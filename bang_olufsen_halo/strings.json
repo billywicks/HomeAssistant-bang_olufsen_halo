@@ -1,0 +1,10 @@
+{
+    "config": {
+      "step": {
+        "user": {
+          "title": "Configure My Device",
+          "description": "Please provide host, port, and JSON data. {generate_json_url}"
+        }
+      }
+    }
+  }
